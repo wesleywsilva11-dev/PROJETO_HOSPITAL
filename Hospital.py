@@ -74,3 +74,27 @@ def listar_paciente():
     # Percorre toda a fila exibindo os pacientes cadastrados
     for i, p in enumerate(pacientes, start=1):     
         print(f"{i}º - {p['Nome']} | Prioridade: {p['Prioridade']} | Entrada: {p['Horario_Entrada']}")
+
+def chamar_paciente():
+    '''
+    O objetivo dessa função é chamar um paciente e apagá-lo da lista assim que for chamado.
+    evita que o mesmo paciente seja chamado mais de uma vez, evitando erros ou confusão.
+    As estruturas utilizadas foram: Operadores lógicos, manipulação de lista, estrutura condicional, a 
+    biblioteca datetime e adiciona um lista à uma matriz (matriz.histórico).
+    '''
+    print("\nCHAMAR PACIENTE")
+    if len(pacientes) == 0:
+        print("Fila vazia. Nenhum paciente para chamar.")
+        return
+
+    # O popleft() remove o primeiro elemento de forma eficiente (Biblioteca queue/collections)
+    proximo = pacientes.popleft()
+    # Obtém o horário em que o paciente foi chamado
+    horario_chamada = datetime.now()
+
+    print(f"Próximo paciente: {proximo['Nome']} (Prioridade: {proximo['Prioridade']})")
+    print(f"Encaminhado para o consultório às {horario_chamada}.")
+
+    # Alimenta a Matriz (Atividade 1) criando uma nova linha (lista) no histórico
+    dados_atendimento = [horario_chamada, proximo['Nome'], proximo['Sintomas'], proximo['Prioridade']]
+    matriz_historico.append(dados_atendimento)
