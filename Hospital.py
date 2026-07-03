@@ -55,3 +55,22 @@ def cadastro_paciente():
     pacientes.append(paciente)  
 
     print(f"\nPaciente {nome} cadastrado com sucesso às {horario_entrada}!")
+    
+
+def listar_paciente():
+    '''
+    O objetivo dessa função é criar uma lista de paciente, definindo uma fila de pacientes.
+    E resolve as dúvidas dos pacientes e dos funcioários em relação a organização e quantidade dos pacientes.
+    Nessa funcão utiliza-se manipulação de lista, uma etrutura de repetição que informa o tamanho e informações da lista.
+    '''
+
+    # Verifica se existem pacientes aguardando atendimento
+    if len(pacientes) == 0:
+        print("\nNenhum paciente na fila de espera!")
+        return
+    
+    print("\n--- FILA DE PACIENTES EM ESPERA ---")
+
+    # Percorre toda a fila exibindo os pacientes cadastrados
+    for i, p in enumerate(pacientes, start=1):     
+        print(f"{i}º - {p['Nome']} | Prioridade: {p['Prioridade']} | Entrada: {p['Horario_Entrada']}")
