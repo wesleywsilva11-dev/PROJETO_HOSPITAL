@@ -13,7 +13,7 @@ Miguel
 Tatiane
 ## Branches criadas
 
-principal
+main
 
 ramo_Wesley
 
