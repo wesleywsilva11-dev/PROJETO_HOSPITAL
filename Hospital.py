@@ -98,3 +98,135 @@ def chamar_paciente():
     # Alimenta a Matriz (Atividade 1) criando uma nova linha (lista) no histórico
     dados_atendimento = [horario_chamada, proximo['Nome'], proximo['Sintomas'], proximo['Prioridade']]
     matriz_historico.append(dados_atendimento)
+
+def buscar_paciente():
+
+        '''
+
+        O objetivo dessa função é buscar um paciente na lista verificando se ele existe ou não.
+        Ajuda a saber se um paciente está cadastrado e informa suas informações.
+        Nessa função foram utilizadas as seguintes estruturas: estrutura de repetição, operadores lógicos, estruturas 
+        condicionais e algumas funções nativas do python.
+        '''
+        print("\nBUSCAR PACIENTE")
+        if len(pacientes) == 0:
+            print("Fila de espera vazia.")
+            return
+        
+        # Nome informado pelo usuário para realizar a busca
+        nome_busca = input("Nome para buscar paciente: ").strip().lower()
+        encontrado = False
+
+        for posicao, paciente in enumerate(pacientes, start=1):
+            if nome_busca in paciente["Nome"].lower():
+                print("\nPaciente encontrado na fila de espera!")
+                print(f"Posição na fila: {posicao}")
+                print(f"Nome: {paciente['Nome']}")
+                print(f"Idade: {paciente['Idade']}")
+                print(f"Sintomas: {paciente['Sintomas']}")
+                print(f"Prioridade: {paciente['Prioridade']}")
+                print(f"Horário de Entrada: {paciente['Horario_Entrada']}")
+                # Indica que o paciente foi localizado
+                encontrado = True  
+
+        if not encontrado:
+            print("Paciente não encontrado na fila de espera.")
+
+
+def mostrar_estatisticas():
+        '''
+        O objetivo da função é definir a quantidade de pacientes que se encaixam em cada classificação de risco.
+        facilita a gestão de dados por classificação e mostra a quantidade de consultas que estão em cada tipo de lista.
+        utilizamos estrutura de repetição, estruturas condicionais e informa o tamanho da lista usando o "len".
+        '''
+        print("\nESTATÍSTICAS HOSPITALARES (EM ESPERA):\n")
+        # Contadores para cada nível de prioridade
+        emergencia = 0
+        urgente = 0
+        normal = 0
+
+        # Conta quantos pacientes existem em cada classificação
+        for paciente in pacientes:
+            if paciente["Prioridade"] == "Emergência":
+                emergencia += 1
+            elif paciente["Prioridade"] == "Urgente":
+                urgente += 1
+            else:
+                normal += 1
+
+        print("Total de pacientes aguardando:", len(pacientes))
+        print("Emergência:", emergencia)
+        print("Urgente:", urgente)
+        print("Normal:", normal)
+
+
+def exibir_historico_matriz():
+    '''
+    O objetivo desta função é exibir o histórico dos pacientes que já foram atendidos.
+    Os dados são armazenados em uma matriz, onde cada linha representa um atendimento
+    realizado contendo horário, nome do paciente, sintomas e prioridade.
+    Nesta função são utilizadas estruturas de repetição, manipulação de matrizes,
+    acesso por índices e formatação de saída no terminal.
+    '''
+   
+    print("\n--- RELATÓRIO DE PACIENTES ATENDIDOS (MATRIZ) ---")
+    # Verifica se existe histórico de atendimento
+    if len(matriz_historico) == 0:
+        print("Nenhum atendimento foi realizado ainda.")
+        return
+    
+    # Cabeçalho da tabela de atendimentos realizados
+    print(f"{'HORÁRIO':<10} | {'PACIENTE':<15} | {'SINTOMAS':<20} | {'PRIORIDADE':<12}")
+    print("-" * 65)
+
+    # Varredura da matriz usando índices (Atividade 1 - Acesso por dois índices)
+    for linha in range(len(matriz_historico)):
+        horario = matriz_historico[linha][0]
+        nome = matriz_historico[linha][1]
+        sintoma = matriz_historico[linha][2]
+        prioridade = matriz_historico[linha][3]
+        
+        print(f"{horario:<10} | {nome:<15} | {sintoma:<20} | {prioridade:<12}")
+
+def menu():
+    '''
+    O objetivo desta função é controlar o funcionamento geral do sistema.
+    Ela exibe o menu principal, recebe a opção escolhida pelo usuário e
+    direciona para a funcionalidade correspondente.
+    Nesta função são utilizadas estruturas de repetição, estruturas condicionais
+    e chamadas de funções.
+    '''
+    # Loop principal do sistema
+    while True:
+        print("\nHOSPITAL - SISTEMA DE TRIAGEM (SA2)")
+        print("1 - Cadastrar paciente")
+        print("2 - Lista de pacientes em espera")
+        print("3 - Chamar próximo paciente")
+        print("4 - Buscar paciente")
+        print("5 - Estatísticas de espera")
+        print("6 - Ver Relatório de Atendidos (Matriz)")
+        print("0 - Sair")
+
+        # Recebe a opção escolhida pelo usuário
+        opcao = input("Escolha uma opção: ")
+
+        # Direciona o usuário para a funcionalidade selecionada
+        if opcao == "1":
+            cadastro_paciente()
+        elif opcao == "2":
+            listar_paciente()
+        elif opcao == "3":
+            chamar_paciente()
+        elif opcao == "4":
+            buscar_paciente()
+        elif opcao == "5":
+            mostrar_estatisticas()
+        elif opcao == "6":
+            exibir_historico_matriz()
+        elif opcao == "0":
+            print("\nEncerrando o sistema...")
+            break
+        else:
+            print("Opção inválida!")
+# Execução do sistema
+menu()
